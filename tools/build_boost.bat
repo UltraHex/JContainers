@@ -12,7 +12,7 @@ if not exist "%BOOST_ROOT%\bootstrap.bat" (
 
         echo Download Boost...
         python "%~dp0\download.py" ^
-            https://boostorg.jfrog.io/artifactory/main/release/1.67.0/source/boost_1_67_0.7z ^
+            https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.7z ^
             "%~dp0\boost.7z"
         if errorlevel 1 (
             echo Unable to download Boost, exiting...
@@ -20,7 +20,7 @@ if not exist "%BOOST_ROOT%\bootstrap.bat" (
         )
 
         echo Rename Boost folder...
-        "%~dp0\7za.exe" rn "%~dp0\boost.7z"  boost_1_67_0 boost
+        "%~dp0\7za.exe" rn "%~dp0\boost.7z"  boost_1_78_0 boost
         if errorlevel 1 (
             echo Unable to rename Boost, exiting...
             exit /b 1
