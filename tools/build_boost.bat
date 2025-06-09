@@ -37,7 +37,7 @@ if not exist "%BOOST_ROOT%\bootstrap.bat" (
 
 pushd "%BOOST_ROOT%"
 
-if not exist b2.exe ( 
+if not exist b2.exe (
     echo b2 not found, bootstrapping Boost...
     call bootstrap.bat %1
     if errorlevel 1 (
@@ -57,7 +57,7 @@ if errorlevel 1 (
     popd
     exit /b 3
 )
-    
+
 REM RMDIR /Q /S garbage
 
 popd
