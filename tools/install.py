@@ -106,7 +106,7 @@ def make_archive(dst, src):
     try_system(f'{exe} a -mx9 "{dst}.7z" "{src}" > nul')
 
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) < 3:
         print("Usage: install.py x64/[Release[VR|GOG]|Debug[VR|GOG]] [64|VR|GOG]")
         exit(1)
@@ -136,3 +136,7 @@ if __name__ == "__main__":
 
     print("API example skipped - its under revision...")
     print("All done.")
+
+
+if __name__ == "__main__":
+    main()
