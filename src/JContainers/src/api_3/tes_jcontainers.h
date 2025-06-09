@@ -150,12 +150,12 @@ endfunction
         auto write_file = [&](const boost::filesystem::path& path) {
             boost::filesystem::remove_all(path);
 
-            EXPECT_FALSE(boost::filesystem::is_regular(path));
+            EXPECT_FALSE(boost::filesystem::is_regular_file(path));
 
             object_stack_ref obj = tes_object::object<map>(ctx);
             tes_object::writeToFile(ctx, obj.get(), path.string().c_str());
 
-            EXPECT_TRUE(boost::filesystem::is_regular(path));
+            EXPECT_TRUE(boost::filesystem::is_regular_file(path));
 
             boost::filesystem::remove_all(path);
         };

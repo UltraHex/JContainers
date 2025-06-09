@@ -65,7 +65,7 @@ or source code.
 1. Run `git submodule update --init --recursive` so that all dependencies like Jannson, Google Test
    and etc. get downloaded and linked to the correct revisions.
 2. Run the JContainer's `tools\build_boost.bat` file. It should manage to download, unpack,
-   bootstrap and build the neccessary libraries from Boost (version 1.67 currently). If you encounter
+   bootstrap and build the neccessary libraries from Boost (version 1.86 currently). If you encounter
    boost linking errors later on, you can attempt to specify the msvc version when running the batch
    file, e.g. `tools\build_boost.bat vc141`.
 3. Run also the `tools\merge_skse.bat` file. It should extract the stripped down and bundled SKSE64
