@@ -7,7 +7,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DIST_DIR = os.path.join(ROOT, "dist")
 
 
-def makepath(*args):
+def make_path(*args):
     """Create recursively any directory path composed from the joined args of this function."""
     path = os.path.join(*args)
     if not os.path.exists(path):
@@ -31,7 +31,7 @@ class JCLib(object):
         self.lib.JC_produceCode.argtypes = [ctypes.c_char_p]
 
     def produce_code(self, into):
-        makepath(into)
+        make_path(into)
         print("Produce scripts:", os.path.relpath(into, ROOT))
         self.lib.JC_produceCode(into.encode("utf-8"))
 
@@ -42,38 +42,38 @@ class JCLib(object):
 class Config(object):
     def __init__(self, path):
         self.path = path
-        self._jcLib = None
+        self._jc_lib = None
 
     @property
     def origin(self):
         return os.path.join(ROOT, self.path)
 
     @property
-    def pscDir(self):
+    def psc_dir(self):
         return os.path.join(self.origin, "Data", "scripts", "source")
 
     @property
-    def compiledDir(self):
+    def compiled_dir(self):
         return os.path.join(self.origin, "Data", "scripts")
 
     @property
-    def dataDir(self):
+    def data_dir(self):
         return os.path.join(self.origin, "Data")
 
     @property
-    def pluginDir(self):
+    def plugin_dir(self):
         return os.path.join(self.origin, "Data", "SKSE", "Plugins")
 
     @property
-    def jcLibPath(self):
-        return os.path.join(self.pluginDir, JCLib.name)
+    def jc_lib_path(self):
+        return os.path.join(self.plugin_dir, JCLib.name)
 
     @property
-    def jcLib(self):
-        if not self._jcLib:
-            self._jcLib = JCLib(self.jcLibPath)
+    def jc_lib(self):
+        if not self._jc_lib:
+            self._jc_lib = JCLib(self.jc_lib_path)
 
-        return self._jcLib
+        return self._jc_lib
 
 
 def try_system(command):
@@ -118,20 +118,20 @@ if __name__ == "__main__":
 
     print("Setup Skyrim Mod tree...")
     srcdata = os.path.join(ROOT, "src", "Data")
-    shutil.rmtree(config.dataDir, ignore_errors=True)
-    shutil.copytree(srcdata, config.dataDir)
-    shutil.copy2(os.path.join(config.origin, JCLib.name), config.jcLibPath)
+    shutil.rmtree(config.data_dir, ignore_errors=True)
+    shutil.copytree(srcdata, config.data_dir)
+    shutil.copy2(os.path.join(config.origin, JCLib.name), config.jc_lib_path)
 
     print("Generate and compile scripts...")
-    config.jcLib.produce_code(config.pscDir)
-    compile_scripts(config.pscDir, config.compiledDir)
+    config.jc_lib.produce_code(config.psc_dir)
+    compile_scripts(config.psc_dir, config.compiled_dir)
 
     print("Recreate distros...")
     shutil.rmtree(DIST_DIR, ignore_errors=True)
 
     dst = os.path.join(DIST_DIR, "Data")
-    shutil.copytree(config.dataDir, dst, ignore=shutil.ignore_patterns("*.exp", "*.lib", "test_data"))
-    make_archive(os.path.join(DIST_DIR, "JContainers" + JCLib.suffix + "-v" + config.jcLib.version()), dst)
+    shutil.copytree(config.data_dir, dst, ignore=shutil.ignore_patterns("*.exp", "*.lib", "test_data"))
+    make_archive(os.path.join(DIST_DIR, "JContainers" + JCLib.suffix + "-v" + config.jc_lib.version()), dst)
     shutil.rmtree(dst, ignore_errors=True)
 
     print("API example skipped - its under revision...")
