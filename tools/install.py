@@ -112,7 +112,8 @@ def main():
         exit(1)
 
     JCLib.suffix = sys.argv[2]
-    JCLib.name = "JContainers" + JCLib.suffix + ".dll"
+    name = f"JContainers{JCLib.suffix}"
+    JCLib.name = f"{name}.dll"
 
     config = Config(sys.argv[1])
 
@@ -120,6 +121,7 @@ def main():
     srcdata = os.path.join(ROOT, "src", "Data")
     shutil.rmtree(config.data_dir, ignore_errors=True)
     shutil.copytree(srcdata, config.data_dir)
+    shutil.copy2(os.path.join(config.origin, f"{name}.pdb"), config.plugin_dir)
     shutil.copy2(os.path.join(config.origin, JCLib.name), config.jc_lib_path)
 
     print("Generate and compile scripts...")
